@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common'
 import { LessonEntity } from './entities/lesson.entity'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
-import { DeleteResult } from 'typeorm/query-builder/result/DeleteResult'
 
 @Injectable()
 export class LessonService {
