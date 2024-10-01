@@ -5,10 +5,19 @@ import { Lesson } from '@/views/createlesson/types'
 import { ref } from 'vue'
 import LessonApi from '@/views/createlesson/api/LessonApi'
 import LessonCard from '@/components/createbutton/lessoncard/LessonCard.vue'
+import { ElNotification } from 'element-plus'
 
 const lessons = ref<Lesson[]>([])
 onMounted(async (): Promise<void> => {
-  lessons.value = await LessonApi.getAll()
+    try {
+        lessons.value = await LessonApi.getAll()
+    } catch (e) {
+        ElNotification({
+            title: 'Error',
+            message: e.message,
+            duration: 0,
+        })
+    }
 })
 </script>
 

@@ -10,7 +10,10 @@ import { Author } from './authors/entities/author.entity'
 import { WebsocketGateway } from './websocket/websocket.gateway'
 import { WebsocketModule } from './websocket/websocket.module'
 import { LessonModule } from './lesson/lesson.module'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
 
+console.log(join(__dirname, '..', 'static'))
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -27,6 +30,10 @@ import { LessonModule } from './lesson/lesson.module'
             entities: [Author],
             autoLoadEntities: true,
             synchronize: true
+        }),
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'static'),
+            exclude: ['/api/(.*)']
         }),
         AuthorsModule,
         LessonModule,

@@ -6,7 +6,7 @@ import { dataToArrayClass, dataToClass } from '@/api/ClassFactory'
 @RequestUrl('lessons')
 class LessonApi extends AbstractApi {
   public async getAll(): Promise<Lesson[]> {
-    const json = await this.get('/getAll').json() as unknown []
+    const json = await this.get('/getAll', {timeout: 5000}).json() as unknown []
     return dataToArrayClass(Lesson, json)
   }
 
