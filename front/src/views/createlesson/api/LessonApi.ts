@@ -10,6 +10,11 @@ class LessonApi extends AbstractApi {
     return dataToArrayClass(Lesson, json)
   }
 
+  public async getById(id: string): Promise<Lesson> {
+    const json = await this.get('/getById', { searchParams: { id } }).json()
+    return dataToClass(Lesson, json)
+  }
+
   public async create(lesson: Lesson): Promise<Lesson> {
     const json = (await this.post('/create', { json: lesson }).json()) as unknown
     return dataToClass(Lesson, json)

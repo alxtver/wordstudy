@@ -16,6 +16,11 @@ export class LessonService {
     async getAll(): Promise<Array<LessonEntity>> {
         return await this.lessonRepository.find()
     }
+
+    async getById(id: string): Promise<LessonEntity | null> {
+        return await this.lessonRepository.findOneBy({ id })
+    }
+
     /** Создать урок */
     async create(lesson: LessonEntity): Promise<LessonEntity> {
         delete lesson.id

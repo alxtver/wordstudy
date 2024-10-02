@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import CreateLesson from '@/views/createlesson/CreateLesson.vue'
+import EditLesson from '@/views/createlesson/EditLesson.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,10 +11,11 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/createLesson',
-      name: 'createLesson',
-      component: CreateLesson
-    },
+      path: '/editLesson/:lessonId',
+      name: 'editLesson',
+      component: EditLesson,
+      props: true
+    }
   ]
 })
 

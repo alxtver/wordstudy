@@ -8,6 +8,7 @@ import LessonCard from '@/components/createbutton/lessoncard/LessonCard.vue'
 import { ElNotification } from 'element-plus'
 
 const lessons = ref<Lesson[]>([])
+
 onMounted(async (): Promise<void> => {
   try {
     lessons.value = await LessonApi.getAll()
@@ -15,17 +16,40 @@ onMounted(async (): Promise<void> => {
     ElNotification({
       title: 'Error',
       message: e.message,
-      duration: 0
+      duration: 10
     })
   }
 })
+
+/** Удалить урок */
+const removeLesson = async (lessonId: string): Promise<void> => {
+    try {
+        await LessonApi.removeLesson(lessonId)
+        const index = lessons.value.findIndex(lesson => lesson.id === lessonId)
+        if (index > -1) {
+            lessons.value.splice(index, 1)
+        }
+    } catch (e) {
+        ElNotification({
+            title: 'Error',
+            message: 'Не удалось удалить!',
+            duration: 10
+        })
+    }
+}
 </script>
 
 <template>
   <div class="lessons-container">
     <h2>Проверка</h2>
     <div class="card-container">
-      <LessonCard class="lesson-card" v-for="lesson in lessons" :lesson="lesson" :key="lesson.id" />
+      <LessonCard
+        class="lesson-card"
+        v-for="lesson in lessons"
+        :lesson="lesson"
+        :key="lesson.id"
+        @remove="removeLesson"
+      />
     </div>
   </div>
   <CreateButton />
