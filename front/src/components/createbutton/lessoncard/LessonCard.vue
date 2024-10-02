@@ -9,7 +9,7 @@ const { lesson } = toRefs(props)
 <template>
   <el-card>
     <div>{{ lesson.name }}</div>
-    <div class="lesson-date">{{ lesson.created }}</div>
+    <div class="lesson-date">{{ lesson.displayDate }}</div>
   </el-card>
 </template>
 

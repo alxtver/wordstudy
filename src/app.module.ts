@@ -13,7 +13,6 @@ import { LessonModule } from './lesson/lesson.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
 
-console.log(join(__dirname, '..', 'static'))
 @Module({
     imports: [
         ConfigModule.forRoot({

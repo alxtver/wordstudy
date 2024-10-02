@@ -1,5 +1,6 @@
 import { kyFactory } from './KyFactory'
 import type { KyInstance, Options, ResponsePromise } from 'ky'
+import { devServerConf } from '@/api/devserverconf'
 
 /**
  * Класс-обёртка над Api
@@ -40,8 +41,8 @@ export class AbstractApi {
    * @param config конфиг
    */
   protected post(additionalUrl: string, config?: Options): ResponsePromise {
-    // config = this.addAbortSignal({ additionalUrl, config, abort: true })
-    // config.retry = 0
+    config = this.addAbortSignal({ additionalUrl, config, abort: true })
+    config.retry = 0
     return this.kyInstance.post(this.getFullUrl(additionalUrl), config)
   }
 
@@ -60,7 +61,7 @@ export class AbstractApi {
    * @private
    */
   protected getFullUrl(additionalUrl: string): URL {
-    return new URL('http://192.168.1.33:3000/api/' + this.mainUrl + additionalUrl)
+    return new URL(devServerConf.host + ':' + devServerConf.port +'/api/' + this.mainUrl + additionalUrl)
   }
 
   private addAbortSignal({
