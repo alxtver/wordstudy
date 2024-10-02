@@ -1,6 +1,6 @@
 import RequestUrl from '../../../api/RequestUrl'
 import { AbstractApi } from '@/api/AbstractApi'
-import { Lesson } from '@/views/createlesson/types'
+import { Lesson } from '@/views/editlesson/types'
 import { dataToArrayClass, dataToClass } from '@/api/ClassFactory'
 
 @RequestUrl('lessons')
@@ -16,7 +16,12 @@ class LessonApi extends AbstractApi {
   }
 
   public async create(lesson: Lesson): Promise<Lesson> {
-    const json = (await this.post('/create', { json: lesson }).json()) as unknown
+    const json = await this.post('/create', { json: lesson }).json()
+    return dataToClass(Lesson, json)
+  }
+
+  public async update(lesson: Lesson): Promise<Lesson> {
+    const json = await this.put('/update', { json: lesson }).json()
     return dataToClass(Lesson, json)
   }
 

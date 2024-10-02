@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import CreateButton from '@/components/createbutton/CreateButton.vue'
 import { onMounted } from 'vue'
-import { Lesson } from '@/views/createlesson/types'
+import { Lesson } from '@/views/editlesson/types'
 import { ref } from 'vue'
-import LessonApi from '@/views/createlesson/api/LessonApi'
+import LessonApi from '@/views/editlesson/api/LessonApi'
 import LessonCard from '@/components/createbutton/lessoncard/LessonCard.vue'
 import { ElNotification } from 'element-plus'
 

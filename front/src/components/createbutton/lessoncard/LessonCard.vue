@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Lesson } from '@/views/createlesson/types'
+import type { Lesson } from '@/views/editlesson/types'
 import { toRefs } from 'vue'
-import { More } from '@element-plus/icons-vue'
+import { Delete, EditPen, More, Select } from '@element-plus/icons-vue'
 import type { DropDownCommand } from '@/components/createbutton/lessoncard/types'
 import { useRouter } from 'vue-router'
 
@@ -12,8 +12,8 @@ const router = useRouter()
 
 const emit = defineEmits<{ remove: [id: string] }>()
 
-const goToEditPage =async (id: string): Promise<void> => {
-    await router.push({ name: 'editLesson', params: { lessonId: id } })
+const goToEditPage = async (id: string): Promise<void> => {
+  await router.push({ name: 'editLesson', params: { lessonId: id } })
 }
 const goToSelectPage = (id: string): void => {}
 
@@ -37,18 +37,24 @@ const onChange = (command: DropDownCommand): void => {
       <div class="lesson-name">{{ lesson.name }}</div>
       <div class="lesson-date">{{ lesson.displayDate }}</div>
     </div>
-    <el-dropdown
-      ref="dropdown1"
-      trigger="contextmenu"
-      style="margin-right: 30px"
-      @command="onChange"
-    >
-      <el-button type="text" :icon="More"></el-button>
+    <el-dropdown trigger="contextmenu" @command="onChange">
+      <el-button :icon="More" text></el-button>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item command="SELECT">Выбрать</el-dropdown-item>
-          <el-dropdown-item command="EDIT">Редактировать</el-dropdown-item>
-          <el-dropdown-item divided command="DELETE">Удалить</el-dropdown-item>
+          <el-dropdown-item command="SELECT">
+            <el-icon><Select /></el-icon>
+            <span class="label">Выбрать</span>
+          </el-dropdown-item>
+          <el-dropdown-item command="EDIT">
+            <el-icon><EditPen /></el-icon>
+            <span class="label">Редактировать</span>
+          </el-dropdown-item>
+          <el-dropdown-item class="delete-item" divided command="DELETE">
+            <el-icon>
+              <Delete />
+            </el-icon>
+            <span class="label">Удалить</span>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -67,12 +73,16 @@ const onChange = (command: DropDownCommand): void => {
       color: gray;
     }
   }
-  ::v-deep {
-    .card-body {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  :deep(.card-body) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
+}
+:deep(.delete-item) {
+  background: rgba(255, 0, 0, 0.18) !important;
+}
+.label {
+  margin-left: 10px;
 }
 </style>

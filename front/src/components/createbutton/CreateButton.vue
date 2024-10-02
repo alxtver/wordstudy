@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Plus } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
-import LessonApi from '@/views/createlesson/api/LessonApi'
-import { Lesson } from '@/views/createlesson/types'
+import LessonApi from '@/views/editlesson/api/LessonApi'
+import { Lesson } from '@/views/editlesson/types'
 
 const router = useRouter()
 
