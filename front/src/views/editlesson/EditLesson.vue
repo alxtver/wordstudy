@@ -17,7 +17,7 @@ onMounted(async (): Promise<void> => {
   lesson.value = await LessonApi.getById(lessonId.value)
 })
 
-const onChangeName = async (name: string): Promise<void> => {
+const onChangeName = async (): Promise<void> => {
   await LessonApi.update(lesson.value)
 }
 
