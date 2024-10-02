@@ -13,7 +13,7 @@ const router = useRouter()
 const emit = defineEmits<{ remove: [id: string] }>()
 
 const goToEditPage =async (id: string): Promise<void> => {
-    await router.push({ name: 'editLesson', params: { lessonId: lesson.value.id } })
+    await router.push({ name: 'editLesson', params: { lessonId: id } })
 }
 const goToSelectPage = (id: string): void => {}
 

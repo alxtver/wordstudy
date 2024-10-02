@@ -1,7 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, Res } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common'
 import { LessonService } from './lesson.service'
 import { LessonEntity } from './entities/lesson.entity'
-import { Response } from 'express'
 
 @Controller('lessons')
 export class LessonController {
@@ -16,7 +15,7 @@ export class LessonController {
     }
 
     @Get('getById')
-    async getById(@Query('id') id: string): Promise<LessonEntity| null> {
+    async getById(@Query('id') id: string): Promise<LessonEntity | null> {
         return await this.lessonService.getById(id)
     }
 
