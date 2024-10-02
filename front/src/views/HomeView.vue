@@ -24,13 +24,22 @@ onMounted(async (): Promise<void> => {
 <template>
   <div class="lessons-container">
     <h2>Проверка</h2>
-    <LessonCard class="lesson-card" v-for="lesson in lessons" :lesson="lesson" :key="lesson.id" />
+    <div class="card-container">
+      <LessonCard class="lesson-card" v-for="lesson in lessons" :lesson="lesson" :key="lesson.id" />
+    </div>
   </div>
   <CreateButton />
 </template>
 
 <style lang="scss" scoped>
-.lesson-card + .lesson-card {
-  margin-top: 10px;
+.lessons-container {
+  height: calc(100vh - 65px);
+  .card-container {
+    height: calc(100% - 50px);
+    overflow: auto;
+    .lesson-card + .lesson-card {
+      margin-top: 10px;
+    }
+  }
 }
 </style>
