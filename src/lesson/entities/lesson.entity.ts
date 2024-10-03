@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm'
+import { Word } from '../../words/entities/word.entity'
 
 @Entity()
 export class LessonEntity {
@@ -10,4 +11,7 @@ export class LessonEntity {
 
     @Column()
     name: string
+
+    @OneToMany(() => Word, (word) => word.lesson)
+    words: Word[]
 }

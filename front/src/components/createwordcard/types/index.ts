@@ -5,5 +5,5 @@ export class Word {
   public created!: Date
   public enText!: string
   public ruText!: string
-  public lesson!: string
+  public lesson!: Lesson
 }

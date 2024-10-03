@@ -22,7 +22,7 @@ export class LessonService {
     }
 
     async getById(id: string): Promise<LessonEntity | null> {
-        return await this.lessonRepository.findOneBy({ id })
+        return await this.lessonRepository.findOne({ where: { id }, relations: { words: true } })
     }
 
     /** Создать урок */

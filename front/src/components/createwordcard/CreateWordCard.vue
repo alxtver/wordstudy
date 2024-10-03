@@ -14,6 +14,7 @@ const disableAdd = computed((): boolean => {
 
 const onAddClick = () => {
   emit('create', word.value)
+  word.value = new Word()
 }
 </script>
 

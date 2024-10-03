@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router'
 import CreateWordCard from '@/components/createwordcard/CreateWordCard.vue'
 import type { Word } from '@/components/createwordcard/types'
 import WordApi from '@/components/createwordcard/api/WordApi'
+import WordCard from '@/components/wordcard/WordCard.vue'
 
 const props = defineProps<{ lessonId: string }>()
 const { lessonId } = toRefs(props)
@@ -18,6 +19,7 @@ const words = ref<Word[]>([])
 
 onMounted(async (): Promise<void> => {
   lesson.value = await LessonApi.getById(lessonId.value)
+  words.value = lesson.value.words
 })
 
 const onChangeName = async (): Promise<void> => {
@@ -29,9 +31,17 @@ const goBack = async () => {
 }
 
 const onCreateWord = async (word: Word): Promise<void> => {
-  word.lesson = lesson.value.id
+  word.lesson = lesson.value
   const newWord = await WordApi.create(word)
-  words.value.push(newWord)
+  words.value.unshift(newWord)
+}
+
+const onRemoveWord = async (wordId: string): Promise<void> => {
+  await WordApi.removeWord(wordId)
+  const index = words.value.findIndex((word) => word.id === wordId)
+  if (index > -1) {
+    words.value.splice(index, 1)
+  }
 }
 </script>
 
@@ -45,9 +55,10 @@ const onCreateWord = async (word: Word): Promise<void> => {
     />
     <el-divider />
     <div class="word-container">
-      <div class="flex justify-end w-full">
-        <CreateWordCard @create="onCreateWord" />
-      </div>
+      <CreateWordCard @create="onCreateWord" />
+        <div class="added-words">
+            <WordCard v-for="word in words" :key="word.id" :word="word" @remove-word="onRemoveWord" />
+        </div>
     </div>
     <div class="flex justify-end w-full">
       <el-button type="info" @click="goBack">Назад</el-button>
@@ -58,5 +69,10 @@ const onCreateWord = async (word: Word): Promise<void> => {
 <style scoped lang="scss">
 .word-container {
   height: calc(100vh - 180px);
+    .added-words {
+        margin-top: 5px;
+        height: calc(100vh - 310px);
+        overflow: auto;
+    }
 }
 </style>

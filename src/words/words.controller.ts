@@ -12,7 +12,7 @@ export class WordsController {
     }
 
     @Post('create')
-    async create(@Body() createWordDto: Word) {
+    async create(@Body() createWordDto: Word): Promise<Word> {
         return await this.wordsService.create(createWordDto)
     }
 
