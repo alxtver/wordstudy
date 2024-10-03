@@ -2,7 +2,7 @@
 import type { Lesson } from '@/views/editlesson/types'
 import { toRefs } from 'vue'
 import { Delete, EditPen, More, Select } from '@element-plus/icons-vue'
-import type { DropDownCommand } from '@/components/createbutton/lessoncard/types'
+import type { DropDownCommand } from '@/components/lessoncard/types'
 import { useRouter } from 'vue-router'
 
 const props = defineProps<{ lesson: Lesson }>()

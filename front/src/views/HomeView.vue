@@ -4,7 +4,7 @@ import { onMounted } from 'vue'
 import { Lesson } from '@/views/editlesson/types'
 import { ref } from 'vue'
 import LessonApi from '@/views/editlesson/api/LessonApi'
-import LessonCard from '@/components/createbutton/lessoncard/LessonCard.vue'
+import LessonCard from '@/components/lessoncard/LessonCard.vue'
 import { ElNotification } from 'element-plus'
 
 const lessons = ref<Lesson[]>([])
