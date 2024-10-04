@@ -15,7 +15,9 @@ const emit = defineEmits<{ remove: [id: string] }>()
 const goToEditPage = async (id: string): Promise<void> => {
   await router.push({ name: 'editLesson', params: { lessonId: id } })
 }
-const goToSelectPage = (id: string): void => {}
+const goToSelectPage =async (id: string): Promise<void> => {
+  await router.push({ name: 'runLesson', params: { lessonId: id } })
+}
 
 const onChange = (command: DropDownCommand): void => {
   switch (command) {
