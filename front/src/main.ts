@@ -12,6 +12,8 @@ import App from './App.vue'
 import router from './router'
 import './styles/css/style.css'
 
+import Vue3TouchEvents, { type Vue3TouchEventsOptions } from 'vue3-touch-events'
+
 const app = createApp(App)
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -21,5 +23,9 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(createPinia())
 app.use(router)
 app.use(ElementPlus, { locale: ru })
+
+app.use<Vue3TouchEventsOptions>(Vue3TouchEvents, {
+  disableClick: false
+})
 
 app.mount('#app')
