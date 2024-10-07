@@ -12,7 +12,7 @@ const lessons = ref<Lesson[]>([])
 onMounted(async (): Promise<void> => {
   try {
     lessons.value = await LessonApi.getAll()
-  } catch (e) {
+  } catch (e: any) {
     ElNotification({
       title: 'Error',
       message: e.message,
