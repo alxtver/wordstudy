@@ -4,6 +4,7 @@ import { toRefs } from 'vue'
 import { Delete, EditPen, More, Select } from '@element-plus/icons-vue'
 import type { DropDownCommand } from '@/components/lessoncard/types'
 import { useRouter } from 'vue-router'
+import { type Action, ElMessageBox } from 'element-plus'
 
 const props = defineProps<{ lesson: Lesson }>()
 const { lesson } = toRefs(props)
@@ -15,14 +16,23 @@ const emit = defineEmits<{ remove: [id: string] }>()
 const goToEditPage = async (id: string): Promise<void> => {
   await router.push({ name: 'editLesson', params: { lessonId: id } })
 }
-const goToSelectPage =async (id: string): Promise<void> => {
+const goToSelectPage = async (id: string): Promise<void> => {
   await router.push({ name: 'runLesson', params: { lessonId: id } })
 }
 
 const onChange = (command: DropDownCommand): void => {
   switch (command) {
     case 'DELETE':
-      emit('remove', lesson.value.id)
+      ElMessageBox.confirm('Удалить?', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Отмена',
+        callback: (action: Action) => {
+          if (action === 'confirm') {
+            emit('remove', lesson.value.id)
+          }
+        }
+      })
+
       break
     case 'EDIT':
       goToEditPage(lesson.value.id)
@@ -39,7 +49,7 @@ const onChange = (command: DropDownCommand): void => {
       <div class="lesson-name">{{ lesson.name }}</div>
       <div class="lesson-date">{{ lesson.displayDate }}</div>
     </div>
-    <el-dropdown trigger="contextmenu" @command="onChange">
+    <el-dropdown trigger="click" @command="onChange">
       <el-button :icon="More" text></el-button>
       <template #dropdown>
         <el-dropdown-menu>

@@ -6,8 +6,11 @@ import { ref } from 'vue'
 import LessonApi from '@/views/editlesson/api/LessonApi'
 import LessonCard from '@/components/lessoncard/LessonCard.vue'
 import { ElNotification } from 'element-plus'
+import { useRouter } from 'vue-router'
 
 const lessons = ref<Lesson[]>([])
+
+const router = useRouter()
 
 onMounted(async (): Promise<void> => {
   try {
@@ -37,11 +40,14 @@ const removeLesson = async (lessonId: string): Promise<void> => {
         })
     }
 }
+
+const goToSelectPage = async (id: string): Promise<void> => {
+    await router.push({ name: 'runLesson', params: { lessonId: id } })
+}
 </script>
 
 <template>
   <div class="lessons-container">
-    <h2>Проверка</h2>
     <div class="card-container">
       <LessonCard
         class="lesson-card"
@@ -49,6 +55,7 @@ const removeLesson = async (lessonId: string): Promise<void> => {
         :lesson="lesson"
         :key="lesson.id"
         @remove="removeLesson"
+        @click="goToSelectPage(lesson.id)"
       />
     </div>
   </div>

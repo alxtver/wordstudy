@@ -49,60 +49,63 @@ const onCheck = async (): Promise<void> => {
   }
 }
 
-const swipeLeft = (direction: 'left' | 'right'): void => {
+const swipe = (direction: 'left' | 'right'): void => {
   if (direction === 'right') {
     currentIndex.value = currentIndex.value ? --currentIndex.value : currentIndex.value
   } else if (direction === 'left') {
     currentIndex.value < words.value.length - 1 ? ++currentIndex.value : currentIndex.value
   }
+  showAnswer.value = false
 }
 </script>
 
 <template>
-  <div
-    class="w-full h-full"
-    :style="{
-      background: img ? `url(${img})` : '',
-      height: 'calc(100vh - 4rem)',
-      backgroundSize: 'contain',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center'
-    }"
-    v-touch:swipe="swipeLeft"
-  >
-    )>
-    <div class="w-full flex justify-end">
-      <el-button type="info" circle @click="onSpeak">
-        <el-icon><Microphone /></el-icon>
-      </el-button>
-      <el-button type="primary" circle @click="onCheck">
-        <el-icon><Check /></el-icon>
-      </el-button>
-      <el-button type="success" @click="goBack" circle>
+  <div class="w-full" style="height: calc(100vh - 4rem)" v-touch:swipe="swipe">
+    <div class="w-full flex justify-between">
+      <div class="text-amber-300 text-3xl mr-40">{{ `${currentIndex + 1}/${words.length}` }}</div>
+      <el-button type="success" @click="goBack" circle size="large">
         <el-icon><Back /></el-icon>
       </el-button>
     </div>
-    <div v-if="words.length" class="flex items-center p-5">
+
+    <el-card v-if="words.length" class="h-screen-1/2 mt-3">
       <div class="word" v-if="showAnswer">{{ ruText }}</div>
       <div class="word" v-else>{{ enText }}</div>
-    </div>
+      <template #footer>
+        <div class="w-full flex justify-end">
+          <el-button type="info" circle @click="onSpeak" size="large">
+            <el-icon><Microphone /></el-icon>
+          </el-button>
+          <el-button type="primary" circle @click="onCheck" size="large">
+            <el-icon><Check /></el-icon>
+          </el-button>
+        </div>
+      </template>
+    </el-card>
+
+    <div
+      v-if="showAnswer"
+      class="image mt-3"
+      style="height: 40vh"
+      :style="{
+        background: img ? `url(${img})` : '',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center'
+      }"
+    ></div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .word {
-  width: 100vw;
-  font-size: 3rem;
-  color: #d2d1d1;
+  font-size: 2.5rem;
+  color: #505050;
   box-sizing: border-box;
-  position: absolute;
   font-weight: bold;
-  left: 0;
-  top: 24vh;
   backdrop-filter: blur(8px);
-  text-align: center;
-  -webkit-text-stroke: 2px #3a3a3a;
   overflow-wrap: break-word;
   hyphens: auto;
+  text-align: center;
 }
 </style>
